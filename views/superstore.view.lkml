@@ -1,15 +1,7 @@
-# The name of this view in Looker is "Superstore"
 view: superstore {
-  # The sql_table_name parameter indicates the underlying database table
-  # to be used for all fields in this view.
-  sql_table_name: `Nandhini_Sample.Superstore`
-    ;;
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
 
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Category" in Explore.
+  sql_table_name: Nandhini_Sample.Superstore
+    ;;
 
   dimension: category {
     type: string
@@ -18,6 +10,7 @@ view: superstore {
 
   dimension: city {
     type: string
+    map_layer_name: countries
     sql: ${TABLE}.City ;;
   }
 
@@ -30,6 +23,7 @@ view: superstore {
   dimension: customer_id {
     type: string
     sql: ${TABLE}.Customer_ID ;;
+    drill_fields: [product_name, city]
   }
 
   dimension: customer_name {
@@ -39,11 +33,19 @@ view: superstore {
 
   dimension: discount {
     type: number
+    value_format: "0"
     sql: ${TABLE}.Discount ;;
   }
 
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+  dimension: product_name {
+    type: string
+    sql: ${TABLE}.Product_Name;;
+    drill_fields: [product_type*]
+  }
+
+  set: product_type {
+    fields: [category,sub_category,customer_name,customer_id]
+  }
 
   dimension_group: order {
     type: time
@@ -75,19 +77,33 @@ view: superstore {
     sql: ${TABLE}.Product_ID ;;
   }
 
-  dimension: product_name {
-    type: string
-    sql: ${TABLE}.Product_Name ;;
-  }
+
 
   dimension: profit {
     type: number
+    value_format: "0"
     sql: ${TABLE}.Profit ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+  dimension: Sales_Feedback {
+    case: {
+      when: {
+        sql: ${sales} >= 1000;;
+        label: "Good"
+      }
+
+      when: {
+        sql: ${sales} > 500 AND ${sales} <= 999 ;;
+        label: "Average"
+      }
+
+      when: {
+        sql: ${sales} < 100 ;;
+        label: "Low "
+      }
+      else:"Below Average"
+    }
+  }
 
   measure: total_profit {
     type: sum
@@ -116,6 +132,7 @@ view: superstore {
 
   dimension: sales {
     type: number
+    value_format: "0"
     sql: ${TABLE}.Sales ;;
   }
 
@@ -139,6 +156,31 @@ view: superstore {
     sql: ${TABLE}.Ship_Date ;;
   }
 
+  dimension_group: Shipping_days{
+    type: duration
+    intervals: [day, month,week,quarter,year]
+    sql_start: ${TABLE}.order_date ;;
+    sql_end: ${TABLE}.ship_date ;;
+  }
+
+
+  dimension: shippingfeedback {
+    case: {
+      when: {
+        sql: ${days_Shipping_days} >= 3;;
+        label: "Dispatched Late"
+      }
+
+      else:"Dispatched Soon"
+    }
+  }
+
+  dimension: salesrange {
+    type: bin
+    bins: [0,10,20,30,40,50,60,70,80,1000]
+    style: integer
+    sql: ${sales} ;;
+  }
   dimension: ship_mode {
     type: string
     sql: ${TABLE}.Ship_Mode ;;
@@ -146,6 +188,7 @@ view: superstore {
 
   dimension: state {
     type: string
+    map_layer_name: us_states
     sql: ${TABLE}.State ;;
   }
 
@@ -158,4 +201,5 @@ view: superstore {
     type: count
     drill_fields: [customer_name, product_name]
   }
+
 }

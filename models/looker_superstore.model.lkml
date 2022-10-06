@@ -28,6 +28,13 @@ join: returned_superstore {
   relationship: many_to_one
 }
 
+  join: gifts  {
+    type: left_outer
+    sql_on: ${superstore.category} = ${gifts.category};;
+    relationship: many_to_one
+  }
+
+
 join: Salesdetails {
   type: left_outer
   sql_on: ${superstore.category} = ${Salesdetails.category} ;;
@@ -39,4 +46,6 @@ join: SalesProducts {
   sql_on: ${superstore.region} = ${SalesProducts.region};;
   relationship: many_to_one
 }
+
+
 }

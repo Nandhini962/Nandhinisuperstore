@@ -9,8 +9,8 @@ view: gifts {
   }
 
   dimension: category {
-    type:  string
-    sql: ${TABLE}.category ;;
+    type: string
+    sql: ${TABLE}.Category ;;
   }
 
   dimension: free_gift {

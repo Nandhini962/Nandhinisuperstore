@@ -9,6 +9,7 @@ view: giftsales {
   }
 
   dimension: category {
+    primary_key: yes
     type: string
     sql: ${TABLE}.Category ;;
   }

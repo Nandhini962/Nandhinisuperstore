@@ -11,6 +11,7 @@ view: gifts {
   }
 
   dimension: category {
+    primary_key: yes
     type: string
     sql: ${TABLE}.Category ;;
   }

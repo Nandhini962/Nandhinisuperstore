@@ -5,6 +5,7 @@ view: returned_superstore {
 
 
   dimension: order_id {
+    primary_key: yes
     type: string
     sql: ${TABLE}.Order_ID ;;
   }

@@ -6,6 +6,13 @@ view: superstore {
   dimension: category {
     type: string
     sql: ${TABLE}.Category ;;
+
+  }
+
+
+  measure: customers_by_state {
+    type: count
+    filters: [city: "Abilene"]
   }
 
   dimension: city {
@@ -19,6 +26,7 @@ view: superstore {
     map_layer_name: countries
     sql: ${TABLE}.Country ;;
   }
+
 
   dimension: customer_id {
     type: string
@@ -42,6 +50,9 @@ view: superstore {
     sql: ${TABLE}.Product_Name;;
     drill_fields: [product_type*]
   }
+
+
+
 
   set: product_type {
     fields: [category,sub_category,customer_name,customer_id]
@@ -72,18 +83,19 @@ view: superstore {
     sql: ${TABLE}.Postal_Code ;;
   }
 
+
   dimension: product_id {
     type: string
     sql: ${TABLE}.Product_ID ;;
   }
-
-
 
   dimension: profit {
     type: number
     value_format: "0"
     sql: ${TABLE}.Profit ;;
   }
+
+
 
   dimension: Sales_Feedback {
     case: {
@@ -109,6 +121,48 @@ view: superstore {
     type: sum
     sql: ${profit} ;;
   }
+
+  measure: profits {
+    type: number
+    value_format: "0"
+    sql: ${TABLE}.Profit ;;
+  }
+
+  parameter: item_to_add_up {
+    type: unquoted
+    allowed_value: {
+      label: "total profits"
+      value: "Profit"
+    }
+
+    allowed_value: {
+      label: "total sales"
+      value: "Sales"
+  }
+  }
+
+  measure: dynamic_sum {
+    type: sum
+    sql: ${TABLE}.{% parameter item_to_add_up %} ;;
+    value_format_name: "usd"
+  }
+
+  measure: product_total_sales{
+    type: sum
+    sql: ${TABLE}.{% parameter item_to_add_up %} ;;
+    value_format_name: "usd"
+  }
+
+
+  measure: totalsales {
+    type: sum
+    value_format: "0"
+    sql: ${TABLE}.Sales ;;
+  }
+
+
+
+
 
   measure: average_profit {
     type: average

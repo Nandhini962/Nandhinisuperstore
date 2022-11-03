@@ -13,8 +13,9 @@ include: "/views/**/*.view"
 
 access_grant: Super_city {
   user_attribute: can_super_store
-  allowed_values: [ "no" ]
-}
+allowed_values: ["finance"]}
+
+
 
 
 
@@ -41,8 +42,10 @@ explore: gifts {}
 
 explore: returned_superstore {}
 
+
+
 explore: superstore {
-  required_access_grants: [Super_city]
+required_access_grants: [Super_city]
   #sql_always_where: ${city} = 'Abilene' ;;
 #sql_always_having: ${sales} >= 5 ;;
 

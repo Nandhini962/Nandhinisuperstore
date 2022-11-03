@@ -2,6 +2,8 @@
 
 connection: "looker_capability"
 
+
+
 # include all the views
 include: "/views/**/*.view"
 

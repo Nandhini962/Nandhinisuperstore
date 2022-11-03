@@ -14,8 +14,8 @@ include: "/views/**/*.view"
 
 
 access_grant: Super_city {
-  user_attribute: can_super_store
-allowed_values: ["finance"]}
+  user_attribute: superstore_city
+allowed_values: ["Houston"]}
 
 
 

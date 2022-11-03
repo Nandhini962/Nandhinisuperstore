@@ -5,9 +5,15 @@ connection: "looker_capability"
 # include all the views
 include: "/views/**/*.view"
 
-access_grant: Superstore_attribute {
-  user_attribute: superstore
-  allowed_values: ["Yes"]
+#access_grant: Superstore_attribute {
+ # user_attribute: superstore
+ # allowed_values: ["Yes"]
+#}
+
+
+access_grant: Super_city {
+  user_attribute: can_super_store
+  allowed_values: [ "no" ]
 }
 
 
@@ -19,6 +25,8 @@ datagroup: superstoredatagroup {
   label: "desired label"
   description: "description string"
 }
+
+
 
 
 explore:giftsales{}
@@ -34,7 +42,7 @@ explore: gifts {}
 explore: returned_superstore {}
 
 explore: superstore {
-  required_access_grants: [Superstore_attribute]
+  required_access_grants: [Super_city]
   #sql_always_where: ${city} = 'Abilene' ;;
 #sql_always_having: ${sales} >= 5 ;;
 

@@ -2,33 +2,22 @@ view: SalesProducts {
   derived_table: {
     sql:
       SELECT
-        Product_Name,
-        Sales ,
-        region
+
+      row_number() OVER() AS prim_key,
+      *
       FROM
         Superstore
      GROUP BY
-    1,
-    2,
-    3
+    1
 ORDER BY
     1
 LIMIT 500;;
   }
 
-  dimension: region {
-    type: string
-    sql: ${TABLE}.Region ;;
-  }
 
-  dimension: sales {
+  dimension: prim_key {
     type: number
-    value_format: "0"
-    sql: ${TABLE}.Sales ;;
+    primary_key: yes
+    sql: ${TABLE}.prim_key ;;
   }
-  dimension: product_name {
-    type: string
-    sql: ${TABLE}.Product_Name ;;
-  }
-
 }

@@ -6,9 +6,13 @@ view: superstore {
   dimension: category {
     type: string
     sql: ${TABLE}.Category ;;
+    }
 
+  dimension: prim_key {
+    type: number
+    primary_key: yes
+    sql: ${TABLE}.prim_key ;;
   }
-
 
   measure: customers_by_state {
     type: count
@@ -75,7 +79,6 @@ view: superstore {
 
   dimension: order_id {
     type: string
-    primary_key: yes
     sql: ${TABLE}.Order_ID ;;
   }
 
@@ -162,15 +165,12 @@ view: superstore {
   }
 
 
-
-
-
   measure: average_profit {
     type: average
     sql: ${profit} ;;
   }
 
-  dimension: quantity {
+  measure: quantity {
     type: number
     sql: ${TABLE}.Quantity ;;
   }

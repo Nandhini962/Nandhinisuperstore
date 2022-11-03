@@ -31,5 +31,4 @@ view: Salesdetails {
     sql: ${TABLE}.Sales ;;
   }
 
-
 }

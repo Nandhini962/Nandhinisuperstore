@@ -5,6 +5,13 @@ connection: "looker_capability"
 # include all the views
 include: "/views/**/*.view"
 
+access_grant: Superstore_attribute {
+  user_attribute: superstore
+  allowed_values: ["Yes"]
+}
+
+
+
 datagroup: superstoredatagroup {
   max_cache_age: "24 hours"
   sql_trigger: SELECT max(id) FROM superstore ;;
@@ -27,15 +34,19 @@ explore: gifts {}
 explore: returned_superstore {}
 
 explore: superstore {
+  required_access_grants: [Superstore_attribute]
   #sql_always_where: ${city} = 'Abilene' ;;
+#sql_always_having: ${sales} >= 5 ;;
 
+ # always_filter: {
+ #   filters: [city: "Houston"]
+ # }
 
   join: returned_superstore {
     type: left_outer
     sql_on: ${superstore.order_id} =  ${returned_superstore.order_id} ;;
     relationship: many_to_one
   }
-
 
   join: gifts  {
     type: left_outer
@@ -50,7 +61,7 @@ explore: superstore {
 
   join: SalesProducts {
     type: left_outer
-    sql_on: ${superstore.region} = ${SalesProducts.region};;
+    sql_on: ${superstore.prim_key}= ${SalesProducts.prim_key};;
     relationship: many_to_one
   }
 

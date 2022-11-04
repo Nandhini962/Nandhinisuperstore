@@ -49,7 +49,6 @@ explore: gifts {}
 explore: returned_superstore {}
 
 
-
 explore: superstore {
 required_access_grants: [Superstore_attribute]
   #sql_always_where: ${city} = 'Abilene' ;;

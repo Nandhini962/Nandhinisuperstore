@@ -191,6 +191,12 @@ view: superstore {
     sql: ${TABLE}.Sales ;;
   }
 
+  measure: Maxsales {
+    sql: MAX(${TABLE}.Sales) ;;
+  }
+
+
+
   dimension: segment {
     type: string
     sql: ${TABLE}.Segment ;;

@@ -51,6 +51,10 @@ explore: returned_superstore {}
 
 
 explore: superstore {
+  access_filter: {
+    field: superstore.city
+    user_attribute: can_super_store
+  }
 required_access_grants: [Superstore_attribute]
   #sql_always_where: ${city} = 'Abilene' ;;
 #sql_always_having: ${sales} >= 5 ;;

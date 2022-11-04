@@ -17,6 +17,7 @@ access_grant: Superstore_attribute {
   allowed_values: ["finance"]
 }
 
+
 #access_grant: Super_city {
  # user_attribute: superstore_city
 #allowed_values: ["Houston"]}

@@ -12,10 +12,10 @@ include: "/views/**/*.view"
  # allowed_values: ["Yes"]
 #}
 
-access_grant: Superstore_attribute {
-  user_attribute: can_super_store
-  allowed_values: ["finance"]
-}
+#access_grant: Superstore_attribute {
+ # user_attribute: can_super_store
+  #allowed_values: ["finance"]
+#}
 
 
 #access_grant: Super_city {
@@ -52,10 +52,19 @@ explore: returned_superstore {}
 
 explore: superstore {
   access_filter: {
-    field: superstore.city
-    user_attribute: can_super_store
+    field: superstore.category
+    user_attribute: category_id
+    }
+
+  access_filter: {
+    field: superstore.country
+    user_attribute: country_id
   }
-required_access_grants: [Superstore_attribute]
+  #access_filter: {
+   # field: superstore.city
+    #user_attribute: can_super_store
+ # }
+#required_access_grants: [Superstore_attribute]
   #sql_always_where: ${city} = 'Abilene' ;;
 #sql_always_having: ${sales} >= 5 ;;
 

@@ -51,15 +51,12 @@ explore: returned_superstore {}
 
 
 explore: superstore {
-  access_filter: {
-    field: superstore.category
-    user_attribute: category_id
-    }
+  #access_filter: {
+   # field: superstore.category
+  #  user_attribute: category_id
+   # }
 
-  access_filter: {
-    field: superstore.country
-    user_attribute: country_id
-  }
+
   #access_filter: {
    # field: superstore.city
     #user_attribute: can_super_store
